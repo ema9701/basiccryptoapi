@@ -14,6 +14,7 @@ import java.util.*;
 
 @SpringBootApplication
 public class WatchlistApplication {
+
     ConsoleService console = new ConsoleService();
     RestCoinService restCoinService = new RestCoinService();
     RestCoinListService restCoinListService = new RestCoinListService();
@@ -57,5 +58,6 @@ public class WatchlistApplication {
         Coin response = restCoinService.get(idInput);
         console.printCoinData(response, response.getId());
     }
+
 
 }

@@ -29,6 +29,7 @@ public class ConsoleService {
         System.out.println("3. Select a watchlist.");
         System.out.println("4. Create new watchlist.");
         System.out.println("0. Exit");
+
     }
 
 
@@ -65,7 +66,9 @@ public class ConsoleService {
         return scanner.nextLine();
     }
 
+
     public void printError() {
         System.out.println("An error occurred. Please try again.");
     }
+
 }
