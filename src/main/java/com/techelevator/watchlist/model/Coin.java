@@ -13,7 +13,9 @@ public class Coin {
     private String name;
     @JsonProperty("market_data")
     private MarketData marketData;
-
+    //Database instance variables
+    private Integer entryId;
+    private Double currentPrice;
 
     public String getId() {
         return id;
@@ -47,8 +49,32 @@ public class Coin {
         this.marketData = marketData;
     }
 
-    public Coin() {
+    //Database getters & setters
 
+    public Integer getEntryId() {
+        return  entryId;
+    }
+
+    public void setEntryId(Integer entryId) {
+        this.entryId = entryId;
+    }
+
+    public Double getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(Double currentPrice) {
+        this.currentPrice = currentPrice;
+    }
+
+    public Coin() {}
+
+    public Coin(Integer entryId, String id, String symbol, String name, Double currentPrice) {
+        this.entryId = entryId;
+        this.id = id;
+        this.symbol = symbol;
+        this.name = name;
+        this.currentPrice = currentPrice;
     }
 
     @Override

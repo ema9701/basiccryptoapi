@@ -26,7 +26,7 @@ public class ConsoleService {
         System.out.println("==========================");
         System.out.println("1. List supported currencies.");
         System.out.println("2. Search for currency by ID.");
-        System.out.println("3. Select a watchlist.");
+        System.out.println("3. Get database entries.");
         System.out.println("4. Create new watchlist.");
         System.out.println("0. Exit");
 
