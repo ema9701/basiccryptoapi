@@ -64,12 +64,31 @@ public class JdbcCoinDao implements CoinDao {
     }
 
     @Override
+    public boolean updatePriceData(Double newPrice, Integer id) {
+        final String sql = " UPDATE coin SET current_price = ? WHERE entry_id = ?; ";
+        return jdbcTemplate.update(sql, newPrice, id) == 1;
+    }
+
+    @Override
     public boolean deleteCoin(Integer id) {
         final String sql = " DELETE FROM coin WHERE entry_id = ?; ";
 
         return jdbcTemplate.update(sql, id) == 1;
     }
 
+    @Override
+    public void addCoinToList(int coinId, int listId) {
+        final String sql = " INSERT INTO coin_watchlist(coin_id, watchlist_id) " +
+                " VALUES (?, ?); ";
+        jdbcTemplate.update(sql, coinId, listId);
+    }
+
+    @Override
+    public void removeFromList(int coinId, int listId) {
+        final String sql = " DELETE FROM coin_watchlist WHERE coin_id = ? AND watchlist_id = ?; ";
+        jdbcTemplate.update(sql, coinId, listId);
+    }
+    
     private Coin mapRowToCoin(SqlRowSet rs) {
         Coin coin = new Coin();
         coin.setEntryId(rs.getInt("entry_id"));

@@ -13,6 +13,7 @@ import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import javax.sql.DataSource;
+import java.io.IOException;
 import java.util.List;
 
 @SpringBootApplication
@@ -75,30 +76,27 @@ public class WatchlistApplication {
 
     private void handleCoinData() {
         String idInput = console.promptForString("Coin id: ");
-        Coin response = coinService.get(idInput);
-        console.printCoinData(response, response.getId());
-        String addCoin = console.promptForString("Add to database? (Y/N)");
+        try {
+            Coin response = coinService.get(idInput);
+            console.printCoinData(response, response.getId());
+            String addCoin = console.promptForString("Add to database? (Y/N)");
             if (addCoin.equalsIgnoreCase("y")) {
                 double price = response.getMarketData().getCurrentPrice().get("usd");
                 CoinDTO newEntry = new CoinDTO(response.getId(), response.getSymbol(),
                         response.getName(), price);
-                coinDao.insertCoin(newEntry);
+                Integer newId = coinDao.insertCoin(newEntry);
+                System.out.println("New entry created for " + coinDao.getByEntryId(newId).getName() +
+                        " with an table id of " + newId);
             } else if (addCoin.equalsIgnoreCase("n")) {
                 return;
             }
+        } catch (Exception e) {
+            System.out.println("Coin not found, try again.");
+        }
     }
 
     private void viewFromDatabase() {
         List<Coin> coins = coinDao.list();
-        for (Coin coin : coins) {
-            System.out.println("=======================");
-            System.out.println(coin.getEntryId());
-            System.out.println(coin.getName());
-            System.out.println(coin.getSymbol());
-            System.out.println(coin.getCurrentPrice());
-            System.out.println("=======================");
-        }
+        console.printDBEntries(coins);
     }
-
-
 }

@@ -9,10 +9,10 @@ CREATE TABLE coin (
 	current_price NUMERIC (13, 2)
 );
 
--- CREATE TABLE watchlist (
--- 	watchlist_id SERIAL PRIMARY KEY,
--- 	name VARCHAR(50)
--- );
+ CREATE TABLE watchlist (
+ 	list_id SERIAL PRIMARY KEY,
+ 	list_name VARCHAR(50)
+ );
 --
 -- CREATE TABLE coin_watchlist (
 --    coin_id INT,
@@ -21,6 +21,8 @@ CREATE TABLE coin (
 --    CONSTRAINT FK_coin_watchlist_coin_id FOREIGN KEY (coin_id) REFERENCES coin(table_id),
 --    CONSTRAINT FK_coin_watchlist_watchlist_id FOREIGN KEY (watchlist_id) REFERENCES watchlist(watchlist_id)
 -- );
+
+
 
 INSERT INTO coin (coin_id, symbol, coin_name, current_price)
 VALUES ('test', 'tst', 'TestingCoin', 30.00),

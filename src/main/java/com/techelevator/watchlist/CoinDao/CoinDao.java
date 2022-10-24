@@ -17,5 +17,11 @@ public interface CoinDao {
 
     Integer insertCoin(CoinDTO newCoin);
 
+    boolean updatePriceData(Double newPrice, Integer id);
+
     boolean deleteCoin(Integer id);
+
+    void addCoinToList(int coinId, int listId);
+
+    void removeFromList(int coinId, int listId);
 }

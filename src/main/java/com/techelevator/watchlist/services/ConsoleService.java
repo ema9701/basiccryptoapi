@@ -3,6 +3,7 @@ package com.techelevator.watchlist.services;
 import com.techelevator.watchlist.model.Coin;
 import com.techelevator.watchlist.model.CoinList;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class ConsoleService {
@@ -21,9 +22,9 @@ public class ConsoleService {
     }
 
     public void mainMenuList() {
-        System.out.println("==========================");
-        System.out.println("   Watchlist API Client   ");
-        System.out.println("==========================");
+        System.out.println("============================");
+        System.out.println("     Watchlist API Client   ");
+        System.out.println("============================");
         System.out.println("1. List supported currencies.");
         System.out.println("2. Search for currency by ID.");
         System.out.println("3. Get database entries.");
@@ -32,11 +33,10 @@ public class ConsoleService {
 
     }
 
-
     public void printCoinList(CoinList[] coinLists) {
-        System.out.println("==========================");
-        System.out.println("    CoinList Main         ");
-        System.out.println("==========================");
+        System.out.println("============================");
+        System.out.println("      CoinList Main         ");
+        System.out.println("============================");
         System.out.println("0. Exit");
         if (coinLists != null) {
             for (CoinList list : coinLists) {
@@ -53,6 +53,19 @@ public class ConsoleService {
             System.out.println(msg);
             System.out.println("=============================");
             System.out.println(coin.toString());
+        }
+    }
+
+    public void printDBEntries(List<Coin> coins) {
+        if (coins != null) {
+            for (Coin coin : coins) {
+                System.out.println("===========================");
+                System.out.println(coin.getEntryId() +
+                           " \n" + coin.getName() +
+                           " \n" + coin.getSymbol() +
+                           " \n" + coin.getCurrentPrice());
+                System.out.println("===========================");
+            }
         }
     }
 

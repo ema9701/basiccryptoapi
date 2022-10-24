@@ -5,32 +5,39 @@ import java.util.List;
 
 public class Watchlist {
 
-    Long id;
-    List<Coin> coinList = new ArrayList<>();
+   Integer listId;
+   String listName;
+   List<Coin> savedCoins;
 
+   public Watchlist(Integer listId, String listName) {
+       this.listId = listId;
+       this.listName = listName;
+       this.savedCoins = new ArrayList<>();
+   }
 
-    public Watchlist(Long id, List<Coin> coinList) {
-        this.id = id;
-        this.coinList = coinList;
+   public Watchlist() {}
+
+    public Integer getListId() {
+        return listId;
     }
 
-    public Watchlist() {
+    public void setListId(Integer listId) {
+        this.listId = listId;
     }
 
-    public Long getId() {
-        return id;
+    public String getListName() {
+        return listName;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setListName(String listName) {
+        this.listName = listName;
     }
 
-    public List<Coin> getCoinList() {
-        return coinList;
+    public List<Coin> getSavedCoins() {
+        return savedCoins;
     }
 
-    public void setCoinList(List<Coin> coinList) {
-        this.coinList = coinList;
+    public void setSavedCoins(List<Coin> savedCoins) {
+        this.savedCoins = savedCoins;
     }
-
 }
