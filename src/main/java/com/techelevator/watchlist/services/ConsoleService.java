@@ -2,6 +2,7 @@ package com.techelevator.watchlist.services;
 
 import com.techelevator.watchlist.model.Coin;
 import com.techelevator.watchlist.model.CoinList;
+import com.techelevator.watchlist.model.Watchlist;
 
 import java.util.List;
 import java.util.Scanner;
@@ -28,30 +29,27 @@ public class ConsoleService {
         System.out.println("1. List supported currencies.");
         System.out.println("2. Search for currency by ID.");
         System.out.println("3. Get database entries.");
-        System.out.println("4. Create new watchlist.");
+        System.out.println("4. View/Edit watchlists.");
         System.out.println("0. Exit");
 
     }
 
     public void printCoinList(CoinList[] coinLists) {
-        System.out.println("============================");
-        System.out.println("      CoinList Main         ");
-        System.out.println("============================");
-        System.out.println("0. Exit");
         if (coinLists != null) {
+            System.out.println("============================");
             for (CoinList list : coinLists) {
                 System.out.println(list.toString());
             }
-            System.out.println();
+            System.out.println("============================");
         }
     }
 
     public void printCoinData(Coin coin, String id) {
         if (coin != null) {
             String msg = "Recent Coin Data for: " + id;
-            System.out.println("=============================");
+            System.out.println("===============================");
             System.out.println(msg);
-            System.out.println("=============================");
+            System.out.println("===============================");
             System.out.println(coin.toString());
         }
     }
@@ -59,13 +57,26 @@ public class ConsoleService {
     public void printDBEntries(List<Coin> coins) {
         if (coins != null) {
             for (Coin coin : coins) {
-                System.out.println("===========================");
+                System.out.println("=============================");
                 System.out.println(coin.getEntryId() +
-                           " \n" + coin.getName() +
-                           " \n" + coin.getSymbol() +
-                           " \n" + coin.getCurrentPrice());
-                System.out.println("===========================");
+                        " \n" + coin.getName() +
+                        " \n" + coin.getSymbol() +
+                        " \n" + coin.getCurrentPrice());
+                System.out.println("=============================");
             }
+        }
+    }
+
+
+
+    public void printWatchlist(List<Watchlist> lists) {
+        if (lists != null) {
+            System.out.println("=============================");
+            for (Watchlist list : lists) {
+                System.out.println(list.toString());
+            }
+            System.out.println("=============================");
+
         }
     }
 
@@ -78,7 +89,6 @@ public class ConsoleService {
         System.out.println(prompt);
         return scanner.nextLine();
     }
-
 
     public void printError() {
         System.out.println("An error occurred. Please try again.");

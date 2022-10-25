@@ -11,6 +11,8 @@ public interface CoinDao {
 
     List<Coin> list();
 
+    List<Coin> getCoinsByWatchlistId(int listId);
+
     Coin getByApiId(String apiId);
 
     Coin getByEntryId(Integer id);

@@ -2,9 +2,12 @@ package com.techelevator.watchlist;
 
 import com.techelevator.watchlist.CoinDao.CoinDao;
 import com.techelevator.watchlist.CoinDao.JdbcCoinDao;
+import com.techelevator.watchlist.CoinDao.JdbcWatchlistDao;
+import com.techelevator.watchlist.CoinDao.WatchlistDao;
 import com.techelevator.watchlist.model.Coin;
 import com.techelevator.watchlist.model.CoinDTO;
 import com.techelevator.watchlist.model.CoinList;
+import com.techelevator.watchlist.model.Watchlist;
 import com.techelevator.watchlist.services.ConsoleService;
 import com.techelevator.watchlist.services.RestCoinListService;
 import com.techelevator.watchlist.services.RestCoinService;
@@ -23,6 +26,7 @@ public class WatchlistApplication {
     RestCoinService coinService;
     RestCoinListService coinList;
     CoinDao coinDao;
+    WatchlistDao watchDao;
 
     public WatchlistApplication() {
         this.console = new ConsoleService();
@@ -34,6 +38,7 @@ public class WatchlistApplication {
         dataSource.setUsername(System.getenv("DB_USER"));
         dataSource.setPassword(System.getenv("DB_PASSWORD"));
         this.coinDao = new JdbcCoinDao(dataSource);
+        this.watchDao = new JdbcWatchlistDao((dataSource));
     }
 
 
@@ -55,6 +60,8 @@ public class WatchlistApplication {
                 handleCoinData();
             } else if (menuSelection == 3) {
                 viewFromDatabase();
+            } else if (menuSelection == 4) {
+                selectList();
             }
             else if (menuSelection == 0) {
                 continue;
@@ -85,14 +92,23 @@ public class WatchlistApplication {
                 CoinDTO newEntry = new CoinDTO(response.getId(), response.getSymbol(),
                         response.getName(), price);
                 Integer newId = coinDao.insertCoin(newEntry);
-                System.out.println("New entry created for " + coinDao.getByEntryId(newId).getName() +
+                System.out.println("\n New entry created for " + coinDao.getByEntryId(newId).getName() +
                         " with an table id of " + newId);
             } else if (addCoin.equalsIgnoreCase("n")) {
                 return;
             }
         } catch (Exception e) {
-            System.out.println("Coin not found, try again.");
+            console.printError();
         }
+    }
+
+    private void selectList() {
+        List<Watchlist> lists = watchDao.viewAllLists();
+        console.printWatchlist(lists);
+        String listId = console.promptForString("Select a list: ");
+        Watchlist list = lists.get(Integer.parseInt(listId) -1);
+        list.setSavedCoins(coinDao.getCoinsByWatchlistId(list.getListId()));
+        console.printDBEntries(list.getSavedCoins());
     }
 
     private void viewFromDatabase() {

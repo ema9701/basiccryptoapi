@@ -40,4 +40,10 @@ public class Watchlist {
     public void setSavedCoins(List<Coin> savedCoins) {
         this.savedCoins = savedCoins;
     }
+
+    @Override
+    public String toString() {
+       return listId + "." + listName;
+    }
+
 }

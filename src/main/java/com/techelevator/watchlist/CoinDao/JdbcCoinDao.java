@@ -33,6 +33,20 @@ public class JdbcCoinDao implements CoinDao {
     }
 
     @Override
+    public List<Coin> getCoinsByWatchlistId(int id) {
+        List<Coin> coinsList = new ArrayList<>();
+        final String sql = " SELECT * FROM coin " +
+                " JOIN coin_watchlist ON " +
+                " coin.entry_id = coin_watchlist.coin_id " +
+                " WHERE coin_watchlist.watchlist_id = ?; ";
+        SqlRowSet rs = jdbcTemplate.queryForRowSet(sql, id);
+        while (rs.next()) {
+            coinsList.add(mapRowToCoin(rs));
+        }
+        return coinsList;
+    }
+
+    @Override
     public Coin getByApiId(String apiId) {
         Coin coin = null;
         final String sql = " SELECT * FROM coin WHERE coin_id = ?; ";
@@ -88,7 +102,7 @@ public class JdbcCoinDao implements CoinDao {
         final String sql = " DELETE FROM coin_watchlist WHERE coin_id = ? AND watchlist_id = ?; ";
         jdbcTemplate.update(sql, coinId, listId);
     }
-    
+
     private Coin mapRowToCoin(SqlRowSet rs) {
         Coin coin = new Coin();
         coin.setEntryId(rs.getInt("entry_id"));
