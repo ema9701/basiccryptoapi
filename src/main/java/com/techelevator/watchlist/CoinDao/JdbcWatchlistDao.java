@@ -4,11 +4,13 @@ import com.techelevator.watchlist.model.Coin;
 import com.techelevator.watchlist.model.Watchlist;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcWatchlistDao implements WatchlistDao {
 
     JdbcTemplate jdbcTemplate;
@@ -49,6 +51,14 @@ public class JdbcWatchlistDao implements WatchlistDao {
     public boolean deleteList(Integer id) {
         final String sql = " DELETE FROM watchlist WHERE list_id = ?; ";
         return jdbcTemplate.update(sql, id) == 1;
+    }
+
+    @Override
+    public Watchlist createNewList(String name) {
+        final String sql = " INSERT INTO watchlist (name) " +
+                " VALUES (?) RETURNING list_id; ";
+        Integer newListId = jdbcTemplate.queryForObject(sql, Integer.class, name);
+        return getById(newListId);
     }
 
     private Watchlist mapRowToWatchlist(SqlRowSet rs) {

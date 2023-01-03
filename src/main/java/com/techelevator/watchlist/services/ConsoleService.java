@@ -5,6 +5,7 @@ import com.techelevator.watchlist.model.CoinList;
 import com.techelevator.watchlist.model.Watchlist;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class ConsoleService {
@@ -67,6 +68,23 @@ public class ConsoleService {
         }
     }
 
+    public void printSelectedList(Map<String, Coin> coinMap) {
+        if (!coinMap.isEmpty()) {
+            for (Map.Entry<String, Coin> list : coinMap.entrySet()) {
+                Coin coin = list.getValue();
+                System.out.println(list.getKey());
+                System.out.println("===============================");
+                System.out.println(coin.getName() +
+                        " \n" + coin.getSymbol() +
+                        " \n" + coin.getSymbol() +
+                        " \n" + coin.getCurrentPrice());
+                System.out.println("===============================");
+            }
+        }
+    }
+
+
+
 
 
     public void printWatchlist(List<Watchlist> lists) {
@@ -76,7 +94,6 @@ public class ConsoleService {
                 System.out.println(list.toString());
             }
             System.out.println("=============================");
-
         }
     }
 

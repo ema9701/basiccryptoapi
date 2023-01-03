@@ -93,7 +93,7 @@ public class WatchlistApplication {
                         response.getName(), price);
                 Integer newId = coinDao.insertCoin(newEntry);
                 System.out.println("\n New entry created for " + coinDao.getByEntryId(newId).getName() +
-                        " with an table id of " + newId);
+                        " with a table id of " + newId);
             } else if (addCoin.equalsIgnoreCase("n")) {
                 return;
             }
@@ -106,13 +106,27 @@ public class WatchlistApplication {
         List<Watchlist> lists = watchDao.viewAllLists();
         console.printWatchlist(lists);
         String listId = console.promptForString("Select a list: ");
-        Watchlist list = lists.get(Integer.parseInt(listId) -1);
-        list.setSavedCoins(coinDao.getCoinsByWatchlistId(list.getListId()));
-        console.printDBEntries(list.getSavedCoins());
+//        Watchlist list = lists.get(Integer.parseInt(listId) -1);
+//        list.setSavedCoins(coinDao.getCoinsByWatchlistId(list.getListId()));
+//        console.printDBEntries(list.getSavedCoins());
+        Watchlist list = watchDao.getById(Integer.parseInt(listId));
+
     }
+
+    private void createNewList() {
+        String newListName = console.promptForString("Enter a name for the new list: ");
+        Watchlist newList = watchDao.createNewList(newListName);
+    }
+
+
 
     private void viewFromDatabase() {
         List<Coin> coins = coinDao.list();
         console.printDBEntries(coins);
     }
+
+
+
+
+
 }

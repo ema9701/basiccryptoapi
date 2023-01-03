@@ -2,10 +2,12 @@ package com.techelevator.watchlist.services;
 
 import com.techelevator.watchlist.model.CoinList;
 import com.techelevator.watchlist.util.BasicLogger;
+import org.springframework.stereotype.Component;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClientResponseException;
 import org.springframework.web.client.RestTemplate;
 
+@Component
 public class RestCoinListService implements  CoinListService{
 
     private static final String API_BASE_URL = "https://api.coingecko.com/api/v3/coins/list";

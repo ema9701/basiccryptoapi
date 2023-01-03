@@ -1,21 +1,26 @@
 package com.techelevator.watchlist.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Watchlist {
 
-   Integer listId;
-   String listName;
-   List<Coin> savedCoins;
+    Integer listId;
+    String listName;
+    List<Coin> savedCoins;
+    Map<String, Coin> coinsToWatch;
 
-   public Watchlist(Integer listId, String listName) {
-       this.listId = listId;
-       this.listName = listName;
-       this.savedCoins = new ArrayList<>();
-   }
+    public Watchlist(Integer listId, String listName) {
+        this.listId = listId;
+        this.listName = listName;
+        this.savedCoins = new ArrayList<>();
+        this.coinsToWatch = new HashMap<>();
+    }
 
-   public Watchlist() {}
+    public Watchlist() {
+    }
 
     public Integer getListId() {
         return listId;
@@ -41,9 +46,25 @@ public class Watchlist {
         this.savedCoins = savedCoins;
     }
 
+    public Map<String, Coin> getCoinsToWatch() {
+        return coinsToWatch;
+    }
+
+    public void setCoinsToWatch(Map<String, Coin> coinsToWatch) {
+        this.coinsToWatch = coinsToWatch;
+    }
+
+    public void addCoinsToList(Coin coin) {
+        if (coinsToWatch.containsKey(getListName())) {
+            if (!coinsToWatch.containsValue(coin)) {
+                coinsToWatch.put(getListName(), coin);
+            }
+        }
+    }
+
     @Override
     public String toString() {
-       return listId + "." + listName;
+        return listId + "." + listName;
     }
 
 }

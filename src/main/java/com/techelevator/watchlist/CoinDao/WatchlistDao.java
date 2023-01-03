@@ -15,5 +15,7 @@ public interface WatchlistDao {
 
     boolean deleteList(Integer id);
 
+    Watchlist createNewList(String name);
+
 
 }
